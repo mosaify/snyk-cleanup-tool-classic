@@ -18,7 +18,7 @@ You can create/grab one at the https://app.snyk.io/account[Snyk account page].
 ./snyk-cleanup-tool --token ${SNYK_TOKEN}
 ----
 
-==== Snyk token autodetection (unstable)
+==== Snyk token autodetection (*unstable*)
 
 We will also attempt to get the Snyk token from your local environment if it is not provided.
 

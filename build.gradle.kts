@@ -2,6 +2,7 @@ group = "dev.samoylenko"
 version = "0.1.2-SNAPSHOT"
 
 repositories {
+    mavenLocal()
     mavenCentral()
 
     maven {
@@ -16,9 +17,20 @@ plugins {
     alias(libs.plugins.kotlin.plugin.jvm)
 }
 
+kotlin {
+    sourceSets.configureEach {
+        languageSettings {
+            optIn("kotlin.time.ExperimentalTime")
+            optIn("kotlin.uuid.ExperimentalUuidApi")
+            optIn("kotlinx.serialization.ExperimentalSerializationApi")
+        }
+    }
+}
+
 dependencies {
     implementation(libs.client.snyk)
     implementation(libs.clikt)
+    implementation(libs.kotlinx.datetime)
     implementation(libs.logback.classic)
 
     testImplementation(kotlin("test"))
