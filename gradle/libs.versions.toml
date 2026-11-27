@@ -6,7 +6,6 @@ klogging = "0.11.8"
 kotest = "6.2.7"
 kotlin = "2.4.21"
 kotlinx-coroutines = "1.11.0"
-kotlinx-datetime = "0.8.0"
 
 [plugins]
 kotlin-plugin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -17,7 +16,6 @@ client-snyk = { group = "dev.mosaify", name = "client-snyk-classic", version.ref
 clikt = { group = "com.github.ajalt.clikt", name = "clikt", version.ref = "clikt" }
 kotlinx-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
-kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 slf4j-klogging = { module = "io.klogging:slf4j-klogging", version.ref = "klogging" }
 
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }

@@ -28,7 +28,6 @@ dependencies {
     implementation(libs.client.snyk)
     implementation(libs.clikt)
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.datetime)
 
     runtimeOnly(libs.slf4j.klogging)
 

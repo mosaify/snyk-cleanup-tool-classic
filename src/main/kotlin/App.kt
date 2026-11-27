@@ -23,12 +23,17 @@ import dev.mosaify.client.snyk.model.response.OrgInfo
 import dev.mosaify.client.snyk.model.response.ProjectInfo
 import dev.mosaify.client.snyk.model.response.TargetInfo
 import kotlinx.coroutines.runBlocking
-import kotlinx.datetime.*
+import java.time.LocalDate
+import java.time.ZoneId
 import kotlin.system.exitProcess
-import kotlin.time.Clock
+import kotlin.time.Duration.Companion.hours
 import kotlin.time.Instant
+import kotlin.time.toJavaInstant
+import kotlin.time.toKotlinInstant
 
 fun main(args: Array<String>) = ClientSnykCli().main(args)
+
+private fun Instant.toLocalDate(): LocalDate = toJavaInstant().atZone(ZoneId.systemDefault()).toLocalDate()
 
 class ClientSnykCli : CliktCommand(name = About.NAME) {
 
@@ -53,7 +58,7 @@ class ClientSnykCli : CliktCommand(name = About.NAME) {
                     LocalDate.parse(before)
                 }.getOrElse {
                     terminal.println((bold + brightRed)("ERROR: Could not parse \"$before\" as a local date."))
-                    val currentDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+                    val currentDate = LocalDate.now()
                     terminal.println("Date format example: $currentDate")
                     exitProcess(-1)
                 }
@@ -162,7 +167,7 @@ class CleanupUtils(
         filters: Collection<String>,
         @Suppress("UNUSED_PARAMETER") dryRun: Boolean,
     ) {
-        val beforeDate = before?.atStartOfDayIn(TimeZone.currentSystemDefault())
+        val beforeDate = before?.atStartOfDay(ZoneId.systemDefault())?.toInstant()?.toKotlinInstant()
         orgs.forEach { org ->
             terminal.println("Working with org: ${org.attributes.slug}")
 
@@ -176,8 +181,8 @@ class CleanupUtils(
                         .flatMap { (targetReference, projectsInTargetReference) ->
 
                             println("Processing ${target.attributes.displayName} :: $targetReference")
-                            val latestMonitored = projectsInTargetReference.mapNotNull { it.meta?.cliMonitoredAt }.maxOrNull() //?.toLocalDateTime(TimeZone.currentSystemDefault())
-                            val latestMonitoredCutoff = latestMonitored?.minus(24, DateTimeUnit.HOUR) // Allow scans crossing a day border
+                            val latestMonitored = projectsInTargetReference.mapNotNull { it.meta?.cliMonitoredAt }.maxOrNull()
+                            val latestMonitoredCutoff = latestMonitored?.minus(24.hours) // Allow scans crossing a day border
 
                             // TODO: this is global, same happens on target level if this is null
                             val expiredBeforeDate = beforeDate ?: latestMonitoredCutoff
@@ -219,7 +224,7 @@ class CleanupUtils(
                                 project.attributes.name,
                                 project.id,
                                 project.attributes.status,
-                                project.meta?.cliMonitoredAt?.toLocalDateTime(TimeZone.currentSystemDefault())?.date?.toString()
+                                project.meta?.cliMonitoredAt?.toLocalDate()?.toString()
                                     ?: "--"
                             )
                         }
@@ -289,7 +294,7 @@ class CleanupUtils(
 
                         row {
                             cell(emptyTarget.attributes.displayName)
-                            cell(emptyTarget.attributes.createdAt.toLocalDateTime(TimeZone.currentSystemDefault()).date)
+                            cell(emptyTarget.attributes.createdAt.toLocalDate())
                             cell(emptyTarget.attributes.isPrivate)
                             cell(emptyTarget.id)
                             cell(
