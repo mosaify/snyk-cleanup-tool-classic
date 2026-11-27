@@ -9,27 +9,21 @@ import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.multiple
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.mordant.rendering.TextColors.*
-import com.github.ajalt.mordant.rendering.TextStyles.*
+import com.github.ajalt.mordant.rendering.TextStyles.bold
+import com.github.ajalt.mordant.rendering.TextStyles.italic
 import com.github.ajalt.mordant.table.Borders
 import com.github.ajalt.mordant.table.ColumnWidth
 import com.github.ajalt.mordant.table.grid
 import com.github.ajalt.mordant.table.table
 import com.github.ajalt.mordant.terminal.Terminal
 import com.github.ajalt.mordant.terminal.YesNoPrompt
-import dev.samoylenko.client.snyk.Extensions.isSupportedByJiraApi
-import dev.samoylenko.client.snyk.SnykClient
-import dev.samoylenko.client.snyk.model.response.OrgInfo
-import dev.samoylenko.client.snyk.model.response.ProjectInfo
-import dev.samoylenko.client.snyk.model.response.TargetInfo
+import dev.mosaify.client.snyk.Extensions.isSupportedByJiraApi
+import dev.mosaify.client.snyk.SnykClient
+import dev.mosaify.client.snyk.model.response.OrgInfo
+import dev.mosaify.client.snyk.model.response.ProjectInfo
+import dev.mosaify.client.snyk.model.response.TargetInfo
 import kotlinx.coroutines.runBlocking
-import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.atStartOfDayIn
-import kotlinx.datetime.minus
-import kotlinx.datetime.toLocalDateTime
-import kotlin.collections.filter
-import kotlin.let
+import kotlinx.datetime.*
 import kotlin.system.exitProcess
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -60,7 +54,7 @@ class ClientSnykCli : CliktCommand() {
                 }.getOrElse {
                     terminal.println((bold + brightRed)("ERROR: Could not parse \"$before\" as a local date."))
                     val currentDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
-                    terminal.println("Date format example: ${currentDate.toString()}")
+                    terminal.println("Date format example: $currentDate")
                     exitProcess(-1)
                 }
             }
@@ -166,7 +160,7 @@ class CleanupUtils(
         inactive: Boolean,
         before: LocalDate?,
         filters: Collection<String>,
-        dryRun: Boolean,
+        @Suppress("UNUSED_PARAMETER") dryRun: Boolean,
     ) {
         val beforeDate = before?.atStartOfDayIn(TimeZone.currentSystemDefault())
         orgs.forEach { org ->
@@ -328,7 +322,7 @@ class CleanupUtils(
         terminal.println(table {
             header { row { cells("Org Id", "Org Slug", "Org Name", "Project count", "Target count") } }
             body {
-                orgDetails.forEach { it ->
+                orgDetails.forEach {
 
 
                     row { cells("", "") }

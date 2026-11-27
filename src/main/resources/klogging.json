@@ -1,0 +1,32 @@
+{
+  "sinks": {
+    "console": {
+      "renderWith": "RENDER_ANSI",
+      "sendTo": "STDOUT"
+    }
+  },
+  "logging": [
+    {
+      "fromLoggerBase": "io.ktor.client",
+      "stopOnMatch": true,
+      "levelRanges": [
+        {
+          "fromMinLevel": "WARN",
+          "toSinks": [
+            "console"
+          ]
+        }
+      ]
+    },
+    {
+      "levelRanges": [
+        {
+          "fromMinLevel": "INFO",
+          "toSinks": [
+            "console"
+          ]
+        }
+      ]
+    }
+  ]
+}
