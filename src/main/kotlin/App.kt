@@ -1,4 +1,4 @@
-package dev.samoylenko.client.snyk.cli
+package dev.mosaify.client.snyk.cli
 
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.main
@@ -30,7 +30,7 @@ import kotlin.time.Instant
 
 fun main(args: Array<String>) = ClientSnykCli().main(args)
 
-class ClientSnykCli : CliktCommand() {
+class ClientSnykCli : CliktCommand(name = About.NAME) {
 
     private val token by option()
     private val org by argument().multiple()

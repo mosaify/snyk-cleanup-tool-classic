@@ -1,4 +1,4 @@
-package dev.samoylenko.client.snyk.cli
+package dev.mosaify.client.snyk.cli
 
 object About {
     const val NAME = "snyk-cleanup-tool-classic"

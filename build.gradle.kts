@@ -1,6 +1,3 @@
-group = "dev.samoylenko"
-version = "0.1.2-SNAPSHOT"
-
 repositories {
     mavenCentral()
 }
@@ -49,5 +46,5 @@ tasks {
 }
 
 application {
-    mainClass.set("dev.samoylenko.client.snyk.cli.AppKt")
+    mainClass.set("dev.mosaify.client.snyk.cli.AppKt")
 }

@@ -1,4 +1,4 @@
-import dev.samoylenko.client.snyk.cli.About
+import dev.mosaify.client.snyk.cli.About
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
