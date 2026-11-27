@@ -1,4 +1,4 @@
-rootProject.name = "snyk-cleanup-tool"
+rootProject.name = "snyk-cleanup-tool-classic"
 
 pluginManagement {
     repositories {
